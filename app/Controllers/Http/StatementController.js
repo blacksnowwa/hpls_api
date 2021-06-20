@@ -38,7 +38,7 @@ class StatementController {
   async getall({ request, view, response, auth }) {
     const obj = [];
     // const data = Statement.query().select('date','username','send').orderBy("date", "user", "desc").fetch()
-    const data = Statement.query().select('date','username','send','recive','out').orderBy("date", "user", "desc").fetch()
+    const data = Statement.query().select('date','username','item','send','recive','out').orderBy("date", "user", "desc").fetch()
   
 
     return data;
