@@ -22,7 +22,8 @@ class StatementController {
 
     return Statement.query()
       .where("date", item[0].date)
-      .where("username", item[0].username).fetch()
+      .where("username", item[0].username)
+      .fetch();
     // var username = item[0].username
 
     // var i = 0
@@ -38,8 +39,10 @@ class StatementController {
   async getall({ request, view, response, auth }) {
     const obj = [];
     // const data = Statement.query().select('date','username','send').orderBy("date", "user", "desc").fetch()
-    const data = Statement.query().select('date','username','item','send','recive','out').orderBy("date", "user", "desc").fetch()
-  
+    const data = Statement.query()
+      .select("date", "username", "item", "send", "recive", "out")
+      .orderBy("username")
+      .fetch();
 
     return data;
   }
