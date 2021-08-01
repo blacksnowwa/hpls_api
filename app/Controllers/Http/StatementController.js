@@ -36,6 +36,22 @@ class StatementController {
 
     // return await Config.all()
   }
+  async all({ request, view, response, auth }) {
+    const obj = [];
+    // const data = Statement.query().select('date','username','send').orderBy("date", "user", "desc").fetch()
+    // const data = Statement.query()
+    //   .select("date", "username", "item", "send", "recive", "out")
+    //   .groupBy("username", "date")
+    //   .orderBy("username")
+    //   .fetch();
+    const data = Statement.query()
+      .select("date", "username", "item", "send", "recive", "out")
+      .groupBy("date", "username")
+      .orderBy("date")
+      .sum("send");
+
+    return data;
+  }
   async getall({ request, view, response, auth }) {
     const obj = [];
     // const data = Statement.query().select('date','username','send').orderBy("date", "user", "desc").fetch()
