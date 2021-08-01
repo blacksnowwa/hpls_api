@@ -8,6 +8,7 @@ Route.get("/", () => {
 
 //User routes
 Route.group(() => {
+  Route.get("", "UserController.getall");
   Route.post("create", "UserController.create");
 
   Route.route("get", "UserController.fetch", ["GET", "POST"]);

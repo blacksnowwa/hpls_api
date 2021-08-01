@@ -47,8 +47,8 @@ class StatementController {
     const data = Statement.query()
       .select("date", "username", "item", "send", "recive", "out")
       .groupBy("date", "username")
-      .orderBy("date")
-      .sum("send");
+      .orderBy("date", "desc")
+      .sum("send as t_send").sum("recive as t_recive")
 
     return data;
   }

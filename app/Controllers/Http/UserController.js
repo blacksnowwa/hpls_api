@@ -5,13 +5,23 @@ const { validate } = use("Validator");
 const User = use("App/Models/User");
 
 class UserController {
+  async getall({ request, view, response, auth }) {
+    const obj = [];
+    // const data = Statement.query().select('date','username','send').orderBy("date", "user", "desc").fetch()
+    const data = User.query()
+      .select("id","username","email","grade")
+      .where("grade","room")
+      .fetch();
+
+    return data;
+  }
   async create({ request, response }) {
     const data = request.post();
 
     const rules = {
       username: `required|unique:${User.table}`,
       email: `required|unique:${User.table}`,
-      password: `required`
+      password: `required`,
     };
 
     const messages = {
@@ -19,7 +29,7 @@ class UserController {
       "username.unique": "This username is taken. Try another.",
       "email.required": "An Email is required",
       "email.unique": "Email already exists",
-      "password.required": "A password for the user"
+      "password.required": "A password for the user",
     };
 
     const validation = await validate(data, rules, messages);
@@ -31,7 +41,7 @@ class UserController {
 
       return response.status(400).send({
         success: false,
-        message: validation_messages
+        message: validation_messages,
       });
     }
 
@@ -41,7 +51,7 @@ class UserController {
       let return_body = {
         success: true,
         details: create_user,
-        message: "User Successfully created"
+        message: "User Successfully created",
       };
 
       response.send(return_body);
@@ -49,7 +59,7 @@ class UserController {
       Logger.error("Error : ", error);
       return response.status(500).send({
         success: false,
-        message: error.toString()
+        message: error.toString(),
       });
     }
   } //create
@@ -65,7 +75,7 @@ class UserController {
       Logger.error("Error : ", error);
       return response.status(500).send({
         success: false,
-        message: error.toString()
+        message: error.toString(),
       });
     }
   } //fetch
