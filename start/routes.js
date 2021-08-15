@@ -33,6 +33,7 @@ Route.group(() => {
   Route.get("", "StatementController.getall");
   Route.post("saveall", "StatementController.saveall");
   Route.get("all", "StatementController.all");
+  Route.get("report", "StatementController.report");
 }).prefix("api/statement");
 Route.group(() => {
   Route.get("/:username", "ConfigController.getConfig");

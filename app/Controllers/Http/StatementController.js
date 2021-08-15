@@ -48,8 +48,20 @@ class StatementController {
       .select("date", "username", "item", "send", "recive", "out")
       .groupBy("date", "username")
       .orderBy("date", "desc")
-      .sum("send as t_send").sum("recive as t_recive")
+      .sum("send as t_send")
+      .sum("recive as t_recive");
 
+    return data;
+  }
+  async report({ request, view, response, auth, params }) {
+    const date = request.all().date;
+    const data = Statement.query()
+      .select("id", "date", "username", "item", "send", "recive", "out")
+      .where("date", date)
+      .groupBy("item")
+      .orderBy("id", "desc")
+      .sum("send as t_send")
+      .sum("recive as t_recive");
     return data;
   }
   async getall({ request, view, response, auth }) {
