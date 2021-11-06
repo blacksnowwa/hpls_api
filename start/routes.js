@@ -34,6 +34,7 @@ Route.group(() => {
   Route.post("saveall", "StatementController.saveall");
   Route.get("all", "StatementController.all");
   Route.get("report", "StatementController.report");
+  Route.get("daily/:username/:date", "StatementController.getDaily");
 }).prefix("api/statement");
 Route.group(() => {
   Route.get("/:username", "ConfigController.getConfig");

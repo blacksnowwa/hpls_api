@@ -1,13 +1,19 @@
 "use strict";
 const Statement = use("App/Models/Statement");
+const Items = use("App/Models/Item");
 
 class StatementController {
   async saveall({ request, view, response, auth }) {
     var item = request.all();
     var i = 0;
+    var arr = [];
+    for (i in item) {
+      arr.push(item[i].item);
+    }
     await Statement.query()
       .where("date", item[i].date)
       .where("username", item[i].username)
+      .whereIn("item", arr)
       .delete();
     for (i in item) {
       await Statement.create({
@@ -24,17 +30,6 @@ class StatementController {
       .where("date", item[0].date)
       .where("username", item[0].username)
       .fetch();
-    // var username = item[0].username
-
-    // var i = 0
-    // for(i in item){
-    //  await Config.create({
-    //      username:item[i].username,
-    //      itemId:item[i].itemId,
-    //  })
-    // }
-
-    // return await Config.all()
   }
   async all({ request, view, response, auth }) {
     const obj = [];
@@ -73,6 +68,24 @@ class StatementController {
       .fetch();
 
     return data;
+  }
+  async getDaily({ request, params, view, response, auth }) {
+    const obj = Statement.query()
+      .select("*")
+      .where("username", params.username)
+      .where("date", params.date)
+      .fetch();
+    const json = obj.toJSON();
+    // var x = ["asd"];
+
+    // var i = 0;
+    // for (i in obj) {
+    //   var item = await Items.query().where("Name", obj[i].item).fetch();
+    //   var json = item.toJSON();
+    //   obj[i].itemId = json[0].id;
+    //   x.push(i);
+    // }
+    return json;
   }
 }
 
